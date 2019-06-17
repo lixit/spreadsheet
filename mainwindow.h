@@ -46,11 +46,11 @@ private:
     void updateRecentFileActions();
     QString strippedName(const QString &fullFileName);
 
-    Spreadsheet *spreadsheet;
+	Spreadsheet *spreadsheet;
     FindDialog *findDialog;
     QLabel *locationLabel;
     QLabel *formulaLabel;
-	QStringList recentFiles;
+	static QStringList recentFiles;
     QString curFile;
 
     enum { MaxRecentFiles = 5 };

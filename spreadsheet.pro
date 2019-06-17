@@ -56,5 +56,4 @@ SUBDIRS += \
 RESOURCES += \
     spreadsheet.qrc
 
-DISTFILES += \
-    spreadsheet.pro.user
+DISTFILES +=

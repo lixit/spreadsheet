@@ -1,4 +1,3 @@
-#include <QtGui>
 #include <QtWidgets>
 #include "cell.h"
 #include "spreadsheet.h"
@@ -64,7 +63,7 @@ bool Spreadsheet::readFile(const QString &fileName)
     }
 
     QDataStream in(&file);
-    in.setVersion(QDataStream::Qt_4_3);
+	in.setVersion(QDataStream::Qt_5_13);
 
     quint32 magic;
     in >> magic;
@@ -101,7 +100,7 @@ bool Spreadsheet::writeFile(const QString &fileName)
     }
 
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_4_3);
+	out.setVersion(QDataStream::Qt_5_13);
 
     out << quint32(MagicNumber);
 

@@ -7,9 +7,11 @@
 #include "sortdialog.h"
 #include "spreadsheet.h"
 
+QStringList MainWindow::recentFiles;  //static member definition
+
 MainWindow::MainWindow()
 {
-    spreadsheet = new Spreadsheet;
+	spreadsheet = new Spreadsheet;
     setCentralWidget(spreadsheet);
 
     createActions();
@@ -403,7 +405,10 @@ void MainWindow::readSettings()
     restoreGeometry(settings.value("geometry").toByteArray());
 
 	recentFiles = settings.value("recentFiles").toStringList();
-    updateRecentFileActions();
+	foreach (QWidget *win, QApplication::topLevelWidgets()) {
+		if (MainWindow *mainWin = qobject_cast<MainWindow *>(win))
+			mainWin->updateRecentFileActions();
+	}
 
     bool showGrid = settings.value("showGrid", true).toBool();
     showGridAction->setChecked(showGrid);
@@ -473,8 +478,11 @@ void MainWindow::setCurrentFile(const QString &fileName)
         shownName = strippedName(curFile);
         recentFiles.removeAll(curFile);
         recentFiles.prepend(curFile);
-        updateRecentFileActions();
-    }
+		foreach (QWidget *win, QApplication::topLevelWidgets()) {
+			if (MainWindow *mainWin = qobject_cast<MainWindow *>(win))
+				mainWin->updateRecentFileActions();
+		}
+	}
 
     setWindowTitle(tr("%1[*] - %2").arg(shownName)
                                    .arg(tr("Spreadsheet")));
